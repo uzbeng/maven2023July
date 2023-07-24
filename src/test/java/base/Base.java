@@ -1,6 +1,7 @@
 package base;
 
 import java.time.Duration;
+import java.util.Properties;
 
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -17,9 +18,12 @@ public class Base {
 	protected WebDriverWait wait;
 	private long implicitTime = 20;
 	private long explicitTime = 30;
+	protected Properties properties;
 
 	@BeforeMethod
 	public void setup() {
+		
+		// Initilialize your properties here
 
 		String browser = "chrome";
 
