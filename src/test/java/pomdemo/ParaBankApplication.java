@@ -14,10 +14,8 @@ import base.Base;
 import page_objects.AccountDetailsPage;
 import page_objects.LoginPage;
 
-public class ParaBankApplication extends Base {
-	
-	private String username = "userabc";
-	private String password = "user77";
+public class ParaBankApplication extends Base {	
+
 	private String accntNum = "23001";
 	private String accntType = "CHECKING";
 	private String accntBalance = "$1000.00";
@@ -25,13 +23,13 @@ public class ParaBankApplication extends Base {
 
 	@Test
 	public void testLogin() throws InterruptedException {
-		driver.get("https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC");
+		driver.get(properties.getProperty("application.url.qa"));
 
 		LoginPage loginPage = new LoginPage(driver);
 		AccountDetailsPage accountDetailsPage = new AccountDetailsPage(driver);
 
-		loginPage.insertUsername(username);		
-		loginPage.insertPassword(password);
+		loginPage.insertUsername(properties.getProperty("username"));		
+		loginPage.insertPassword(properties.getProperty("password"));
 		loginPage.clickLoginBtn();
 
 		// Verify logged in successfully

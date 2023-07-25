@@ -1,5 +1,7 @@
 package base;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -23,9 +25,18 @@ public class Base {
 	@BeforeMethod
 	public void setup() {
 		
-		// Initilialize your properties here
+		// Initialize your properties here	
+		try {
+			properties = new Properties();
+			FileInputStream fis = new FileInputStream("src\\main\\java\\properties\\application.properties");
+			properties.load(fis);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 
-		String browser = "chrome";
+		String browser = properties.getProperty("browser.name");
 
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", "C:\\webdrivers\\chromedriver.exe");
@@ -44,10 +55,12 @@ public class Base {
 		
 		// Implicit wait:
 		// Does not throw <No Such Element Exception> before the set time
+		String implicitTimeStr = properties.getProperty("wait.time.implicit");
+		long implicitTime = Long.parseLong(implicitTimeStr);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitTime));
 		
 		// Create explicit wait:
-		wait = new WebDriverWait(driver, Duration.ofSeconds(explicitTime));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(properties.getProperty("wait.time.explicit"))));
 	}
 	
 	@AfterMethod
